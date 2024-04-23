@@ -10,7 +10,6 @@ import { updateCar } from '../../api/updateCar';
 const CarList: React.FC = () => {
     const [carList, setCarList] = useState<Car[]>([]);
     const [selectedCar, setSelectedCar] = useState<Car | null>(null);
-    const [isEditing, setIsEditing] = useState<boolean>(false);
     const [updatedName, setUpdatedName] = useState<string>('');
     const [updatedColor, setUpdatedColor] = useState<string>('');
 
@@ -45,7 +44,6 @@ const CarList: React.FC = () => {
         setSelectedCar(car);
         setUpdatedName(car.name);
         setUpdatedColor(car.color);
-        setIsEditing(true);
     };
 
     const handleSaveCar = async () => {
@@ -60,8 +58,6 @@ const CarList: React.FC = () => {
             );
 
             setCarList(updatedCarList);
-            setIsEditing(false);
-            setSelectedCar(null);
         } catch (error) {
             console.error('Error saving car:', error);
         }
@@ -72,37 +68,34 @@ const CarList: React.FC = () => {
         <div>
             <AddCarForm onCarAdded={handleCarAdded} />
 
+            <h2>Список автомобилей</h2>
+            <ul>
+                {carList.map((car) => (
+                    <li className='car-list__item' key={car.id}>
+                        <button onClick={() => handleDeleteCar(car.id)}>Удалить</button>
+                        <button onClick={() => handleEditCar(car)}>Редактировать</button>
+                        <CarIcon className='car-list__icon' color={car.color} />
+                        {car.name}
+                    </li>
+                ))}
+            </ul>
+
             <div>
-                <h2>Список автомобилей</h2>
-                <ul>
-                    {carList.map((car) => (
-                        <li className='car-list__item' key={car.id}>
-                            <button onClick={() => handleDeleteCar(car.id)}>Удалить</button>
-                            <button onClick={() => handleEditCar(car)}>Редактировать</button>
-                            <CarIcon className='car-list__icon' color={car.color} />
-                            {car.name}
-                        </li>
-                    ))}
-                </ul>
+                <h3>Редактировать машину</h3>
+                <input
+                    type='text'
+                    value={updatedName}
+                    onChange={(e) => setUpdatedName(e.target.value)}
+                    placeholder='Введите новое имя машины'
+                />
+                <input
+                    type='color'
+                    value={updatedColor}
+                    onChange={(e) => setUpdatedColor(e.target.value)}
+                />
+                <button onClick={handleSaveCar}>Сохранить</button>
             </div>
-            {isEditing && selectedCar && (
-                <div>
-                    <h3>Редактировать машину</h3>
-                    <input
-                        type='text'
-                        value={updatedName}
-                        onChange={(e) => setUpdatedName(e.target.value)}
-                    />
-                    <input
-                        type='color'
-                        value={updatedColor}
-                        onChange={(e) => setUpdatedColor(e.target.value)}
-                    />
-                    <button onClick={handleSaveCar}>Сохранить</button>
-                </div>
-            )}
         </div>
     );
 };
-
 export default CarList;
