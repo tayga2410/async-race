@@ -1,0 +1,11 @@
+.car-list__item {
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+}
+
+.car-list__icon {
+    width: 80px;
+    height: 60px;
+    transform: scaleX(-1);
+}
