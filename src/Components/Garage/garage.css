@@ -4,39 +4,43 @@
     gap: 30px;
 }
 
+ul {
+    display: flex;
+    flex-direction: column;
+}
+
 .car-list__item {
     display: flex;
     align-items: center;
     text-transform: uppercase;
     position: relative; 
+    width: 100%;
 }
 
 .car-list__icon {
     width: 80px;
     height: 60px;
-    transform: scaleX(-1); 
-    transition: transform 0.3s ease; 
-}
-
-.car-icon-container {
-    position: relative;
+    transform: scaleX(-1);
 }
 
 .car-icon-container.driving .car-list__icon {
-    animation: moveAnimation 2s linear infinite; 
-}
-
+    animation: moveAnimation 3s linear forwards; 
+  }
 .car-icon-container.stopped .car-list__icon {
     animation: returnAnimation 1s ease;
 }
-
 @keyframes moveAnimation {
-    0% { transform: translateX(0); }
-    50% { transform: translateX(50px); }
-    100% { transform: translateX(0); }
+    100% { transform: translateX(400px); }
+}
+
+.car-icon-container {
+    animation-name: moveAnimation;
+    animation-duration: 3s;
+    animation-timing-function: linear; 
+    animation-fill-mode: forwards;
 }
 
 @keyframes returnAnimation {
-    0% { transform: translateX(50px); }
+    0% { transform: translateX(100%); }
     100% { transform: translateX(0); }
 }

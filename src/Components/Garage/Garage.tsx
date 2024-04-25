@@ -15,7 +15,8 @@ const Garage: React.FC = () => {
     const [updatedName, setUpdatedName] = useState<string>('');
     const [updatedColor, setUpdatedColor] = useState<string>('');
     const [drivingStatus, setDrivingStatus] = useState<{ [key: number]: boolean }>({});
-    const { startEngine, stopEngine } = useCarEngine();
+    const [engineStatus, setEngineStatus] = useState<{ [key: number]: boolean }>({});
+    const { startEngine, stopEngine, getElapsedTimeInSeconds } = useCarEngine();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -65,10 +66,40 @@ const Garage: React.FC = () => {
             );
 
             setCarList(updatedCarList);
+
+            setSelectedCar(null);
+            setUpdatedName('');
+            setUpdatedColor('');
         } catch (error) {
             console.error('Ошибка при сохранении машины:', error);
         }
     };
+
+    const handleStartEngine = async (carId: number) => {
+        try {
+            await startEngine(carId);
+            setEngineStatus((prevStatus) => ({
+                ...prevStatus,
+                [carId]: true
+            }));
+        } catch (error) {
+            console.error('Ошибка при запуске двигателя:', error);
+        }
+    };
+
+    const handleStopEngine = async (carId: number) => {
+        try {
+            await stopEngine(carId);
+            setEngineStatus((prevStatus) => ({
+                ...prevStatus,
+                [carId]: false
+            }));
+        } catch (error) {
+            console.error('Ошибка при остановке двигателя:', error);
+        }
+    };
+
+
 
     return (
         <div>
@@ -88,13 +119,20 @@ const Garage: React.FC = () => {
                         <button onClick={() => handleDeleteCar(car.id)}>Delete</button>
                         <button onClick={() => handleEditCar(car)}>Edit</button>
                         <div>
-                            <button onClick={() => startEngine(car.id)}>Start Engine</button>
-                            <button onClick={() => stopEngine(car.id)}>Stop Engine</button>
+                            <button onClick={() => handleStartEngine(car.id)} disabled={engineStatus[car.id]}>
+                                Start Engine
+                            </button>
+                            <button onClick={() => handleStopEngine(car.id)}>Stop Engine</button>
                         </div>
                         <p>{car.name}</p>
-                        <div className={`car-icon-container ${drivingStatus[car.id] ? 'driving' : 'stopped'}`}>
+                        <div className={`car-icon-container ${engineStatus[car.id] ? 'driving' : 'stopped'}`}>
                             <CarIcon className='car-list__icon' color={car.color} />
                         </div>
+                        {engineStatus[car.id] && (
+                            <p>
+                                Elapsed Time: {Math.round(getElapsedTimeInSeconds(car.id))} seconds
+                            </p>
+                        )}
                     </li>
                 ))}
             </ul>
