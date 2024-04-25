@@ -7,12 +7,15 @@ import AddCarForm from '../../utils/addCar';
 import { deleteCar } from '../../api/deleteCar';
 import { updateCar } from '../../api/updateCar';
 import EditCarForm from '../../utils/updateCar';
+import useCarEngine from '../../api/useCarEngine';
 
 const Garage: React.FC = () => {
     const [carList, setCarList] = useState<Car[]>([]);
     const [selectedCar, setSelectedCar] = useState<Car | null>(null);
     const [updatedName, setUpdatedName] = useState<string>('');
     const [updatedColor, setUpdatedColor] = useState<string>('');
+    const [drivingStatus, setDrivingStatus] = useState<{ [key: number]: boolean }>({});
+    const { startEngine, stopEngine } = useCarEngine();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -20,7 +23,7 @@ const Garage: React.FC = () => {
                 const data = await fetchCarList();
                 setCarList(data);
             } catch (error) {
-                console.error('Error setting car list:', error);
+                console.error('Ошибка при получении списка машин:', error);
             }
         };
 
@@ -36,8 +39,11 @@ const Garage: React.FC = () => {
             await deleteCar(carId);
             const updatedCarList = carList.filter((car) => car.id !== carId);
             setCarList(updatedCarList);
+            const updatedStatus = { ...drivingStatus };
+            delete updatedStatus[carId];
+            setDrivingStatus(updatedStatus);
         } catch (error) {
-            console.error('Error deleting car:', error);
+            console.error('Ошибка при удалении машины:', error);
         }
     };
 
@@ -60,7 +66,7 @@ const Garage: React.FC = () => {
 
             setCarList(updatedCarList);
         } catch (error) {
-            console.error('Error saving car:', error);
+            console.error('Ошибка при сохранении машины:', error);
         }
     };
 
@@ -81,8 +87,14 @@ const Garage: React.FC = () => {
                     <li className='car-list__item' key={car.id}>
                         <button onClick={() => handleDeleteCar(car.id)}>Delete</button>
                         <button onClick={() => handleEditCar(car)}>Edit</button>
-                        <CarIcon className='car-list__icon' color={car.color} />
-                        {car.name}
+                        <div>
+                            <button onClick={() => startEngine(car.id)}>Start Engine</button>
+                            <button onClick={() => stopEngine(car.id)}>Stop Engine</button>
+                        </div>
+                        <p>{car.name}</p>
+                        <div className={`car-icon-container ${drivingStatus[car.id] ? 'driving' : 'stopped'}`}>
+                            <CarIcon className='car-list__icon' color={car.color} />
+                        </div>
                     </li>
                 ))}
             </ul>

@@ -1,5 +1,7 @@
 export interface Car {
-    name: string;
-    color: string;
-    id: number;
-  }
+  id: number;
+  name: string;
+  color: string;
+  isDriving: boolean;
+  distanceTraveled: number; 
+}

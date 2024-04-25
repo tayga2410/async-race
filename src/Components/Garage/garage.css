@@ -8,10 +8,35 @@
     display: flex;
     align-items: center;
     text-transform: uppercase;
+    position: relative; 
 }
 
 .car-list__icon {
     width: 80px;
     height: 60px;
-    transform: scaleX(-1);
+    transform: scaleX(-1); 
+    transition: transform 0.3s ease; 
+}
+
+.car-icon-container {
+    position: relative;
+}
+
+.car-icon-container.driving .car-list__icon {
+    animation: moveAnimation 2s linear infinite; 
+}
+
+.car-icon-container.stopped .car-list__icon {
+    animation: returnAnimation 1s ease;
+}
+
+@keyframes moveAnimation {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(50px); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes returnAnimation {
+    0% { transform: translateX(50px); }
+    100% { transform: translateX(0); }
 }
