@@ -1,7 +1,6 @@
-// src/components/AddCarForm.tsx
 import React, { useState } from 'react';
-import { Car } from '../../types/Car';
-import { addCar } from '../../api/addCar';
+import { Car } from '../interface/Car';
+import { addCar } from '../api/addCar';
 
 interface AddCarFormProps {
   onCarAdded: (car: Car) => void;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { CarForm } from '../../types/CarForm';
+import { CarForm } from '../interface/CarForm';
 
 
 const updateCar: React.FC<CarForm> = ({

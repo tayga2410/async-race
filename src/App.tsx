@@ -1,12 +1,12 @@
 import './App.css'
 import Header from './Components/Header/Header';
-import CarList from './Components/CarList/carList';
+import Garage from './Components/Garage/Garage';
 
 const App: React.FC = () => {
   return (
     <div>
       <Header title="Async Race" />
-      <CarList />
+      <Garage />
     </div>
   );
 }

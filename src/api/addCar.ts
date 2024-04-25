@@ -1,4 +1,4 @@
-import { Car } from '../types/Car';
+import { Car } from '../interface/Car';
 
 const API_BASE_URL = 'http://192.168.0.163:3000';
 

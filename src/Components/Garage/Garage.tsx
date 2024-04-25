@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Car } from '../../types/Car';
+import { Car } from '../../interface/Car';
 import { fetchCarList } from '../../api/carList';
 import CarIcon from '../CarIcon/CarIcon';
-import './carList.css';
-import AddCarForm from '../AddCar/addCar';
+import './garage.css';
+import AddCarForm from '../../utils/addCar';
 import { deleteCar } from '../../api/deleteCar';
 import { updateCar } from '../../api/updateCar';
-import EditCarForm from '../UpdateCar/updateCar';
+import EditCarForm from '../../utils/updateCar';
 
-const CarList: React.FC = () => {
+const Garage: React.FC = () => {
     const [carList, setCarList] = useState<Car[]>([]);
     const [selectedCar, setSelectedCar] = useState<Car | null>(null);
     const [updatedName, setUpdatedName] = useState<string>('');
@@ -90,4 +90,4 @@ const CarList: React.FC = () => {
     );
 };
 
-export default CarList;
+export default Garage;

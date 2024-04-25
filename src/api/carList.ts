@@ -1,4 +1,4 @@
-import { Car } from '../types/Car';
+import { Car } from '../interface/Car';
 
 const API_BASE_URL = 'http://192.168.0.163:3000';
 
@@ -12,6 +12,6 @@ export const fetchCarList = async (): Promise<Car[]> => {
     return data;
   } catch (error) {
     console.error('Error fetching car list:', error);
-    return []; // Возвращаем пустой массив в случае ошибки
+    return [];
   }
 };
