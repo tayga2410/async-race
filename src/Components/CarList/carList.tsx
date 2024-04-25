@@ -6,6 +6,7 @@ import './carList.css';
 import AddCarForm from '../AddCar/addCar';
 import { deleteCar } from '../../api/deleteCar';
 import { updateCar } from '../../api/updateCar';
+import EditCarForm from '../UpdateCar/updateCar';
 
 const CarList: React.FC = () => {
     const [carList, setCarList] = useState<Car[]>([]);
@@ -63,39 +64,30 @@ const CarList: React.FC = () => {
         }
     };
 
-
     return (
         <div>
-            <AddCarForm onCarAdded={handleCarAdded} />
-
-            <h2>Список автомобилей</h2>
+            <div className='car-list__button-group'>
+                <AddCarForm onCarAdded={handleCarAdded} />
+                <EditCarForm
+                    updatedName={updatedName}
+                    updatedColor={updatedColor}
+                    onNameChange={setUpdatedName}
+                    onColorChange={setUpdatedColor}
+                    onSave={handleSaveCar}
+                />
+            </div>
             <ul>
                 {carList.map((car) => (
                     <li className='car-list__item' key={car.id}>
-                        <button onClick={() => handleDeleteCar(car.id)}>Удалить</button>
-                        <button onClick={() => handleEditCar(car)}>Редактировать</button>
+                        <button onClick={() => handleDeleteCar(car.id)}>Delete</button>
+                        <button onClick={() => handleEditCar(car)}>Edit</button>
                         <CarIcon className='car-list__icon' color={car.color} />
                         {car.name}
                     </li>
                 ))}
             </ul>
-
-            <div>
-                <h3>Редактировать машину</h3>
-                <input
-                    type='text'
-                    value={updatedName}
-                    onChange={(e) => setUpdatedName(e.target.value)}
-                    placeholder='Введите новое имя машины'
-                />
-                <input
-                    type='color'
-                    value={updatedColor}
-                    onChange={(e) => setUpdatedColor(e.target.value)}
-                />
-                <button onClick={handleSaveCar}>Сохранить</button>
-            </div>
         </div>
     );
 };
+
 export default CarList;

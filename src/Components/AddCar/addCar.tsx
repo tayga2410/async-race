@@ -26,14 +26,14 @@ const AddCarForm: React.FC<AddCarFormProps> = ({ onCarAdded }) => {
   return (
     <form onSubmit={handleSubmit}>
       <label>
-        Имя машины:
+        Car Brand:
         <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
       </label>
       <label>
-        Цвет машины:
+        Color:
         <input type="color" value={color} onChange={(e) => setColor(e.target.value)} />
       </label>
-      <button type="submit">Добавить машину</button>
+      <button type="submit">Add Car</button>
     </form>
   );
 };
