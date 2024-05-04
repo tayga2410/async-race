@@ -15,8 +15,8 @@ const AddCarForm: React.FC<AddCarFormProps> = ({ onCarAdded }) => {
     try {
       const newCar = await addCar(name, color);
       onCarAdded(newCar);
-      setName(''); 
-      setColor('#000000'); 
+      setName('');
+      setColor('#000000');
     } catch (error) {
       console.error('Error adding car:', error);
     }

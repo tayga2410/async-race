@@ -3,5 +3,5 @@ export interface Car {
   name: string;
   color: string;
   isDriving: boolean;
-  startTime?: number; 
+  startTime?: number;
 }

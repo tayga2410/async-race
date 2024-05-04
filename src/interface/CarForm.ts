@@ -1,4 +1,4 @@
-export interface CarForm { 
+export interface CarForm {
     updatedName: string;
     updatedColor: string;
     onNameChange: (value: string) => void;

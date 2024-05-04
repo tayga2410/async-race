@@ -1,46 +1,42 @@
-.car-list__button-group {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-}
-
-ul {
-    display: flex;
-    flex-direction: column;
-}
-
 .car-list__item {
     display: flex;
     align-items: center;
-    text-transform: uppercase;
-    position: relative; 
-    width: 100%;
-}
-
-.car-list__icon {
-    width: 80px;
-    height: 60px;
-    transform: scaleX(-1);
-}
-
-.car-icon-container.driving .car-list__icon {
-    animation: moveAnimation 3s linear forwards; 
-  }
-.car-icon-container.stopped .car-list__icon {
-    animation: returnAnimation 1s ease;
-}
-@keyframes moveAnimation {
-    100% { transform: translateX(400px); }
+    position: relative;
 }
 
 .car-icon-container {
-    animation-name: moveAnimation;
-    animation-duration: 3s;
-    animation-timing-function: linear; 
-    animation-fill-mode: forwards;
+    position: relative;
+    width: 100%; 
 }
 
-@keyframes returnAnimation {
-    0% { transform: translateX(100%); }
-    100% { transform: translateX(0); }
+.car-list__button-group {
+    display: flex;
+}
+
+.car-list__name {
+    margin: 0 10px 0;
+    min-width: 100px;
+    max-width: 150px;
+}
+
+.car-list__icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+   width: 100px;
+   height: 50px;
+    transition: left 10s linear; 
+}
+
+.driving .car-list__icon {
+    animation: moveCar 5s linear forwards; 
+}
+
+.stopped .car-list__icon {
+    animation: none; 
+}
+
+@keyframes moveCar {
+    0% { left: 0%; }   
+    100% { left: 100%; } 
 }
